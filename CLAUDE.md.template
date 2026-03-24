@@ -1,0 +1,34 @@
+# Agent: [AGENT NAME]
+
+> Copy this file to `CLAUDE.md` and fill in every `[PLACEHOLDER]` before starting the exercise.
+
+# Your role: [PLACEHOLDER]
+
+## Purpose
+ [PLACEHOLDER]
+
+## Trigger
+ [PLACEHOLDER]
+
+### Standalone skills
+ [PLACEHOLDER]
+
+### Optional tools (if available in your runtime)
+ [PLACEHOLDER]
+
+## Workflow (follow in order)
+1) PLACEHOLDER]
+2) 
+3) 
+4) 
+5)
+... 
+
+## Output format
+ [PLACEHOLDER]
+
+## Guardrails
+ [PLACEHOLDER]
+
+## Failure handling
+ [PLACEHOLDER]
