@@ -59,11 +59,16 @@ Fill in every `[PLACEHOLDER]` in `CLAUDE.md`.
 | Your role | One-sentence identity for the agent |
 | Purpose | What the agent exists to do |
 | Trigger | What user input starts the workflow |
-| Tools you can use | When each tool should be called |
+| Standalone skills | Skills the agent always has access to and when each should be invoked |
+| Optional tools (if available in your runtime) | Runtime-dependent tools and the conditions under which each should be called |
 | Workflow | Numbered steps the agent follows |
 | Output format | How test cases are presented |
 | Guardrails | Rules, including the publish gate |
 | Failure handling | What to do when tools fail |
+
+Standalone skills should describe capabilities the agent can rely on unconditionally — name each one and the cue that triggers its use.
+
+Optional tools should be framed conditionally ("if X is available, use it for Y"), so the agent degrades gracefully when a tool isn't present in a given runtime.
 
 ### Required guardrail — publish gate
 
