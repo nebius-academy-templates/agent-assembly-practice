@@ -6,13 +6,31 @@ Fetches a GitHub Issue by number and returns structured ticket data.
 
 import json
 import os
-import sys
-
 import requests
+import sys
+from pathlib import Path
 
 OWNER = "vvsevolodovich"
 REPO = "agent-one-tool-practice"
 API_BASE = "https://api.github.com"
+TICKETS_DIR = Path(__file__).parent.parent.parent / "data" / "tickets"
+
+
+def _get_local(ticket_id: str) -> dict:
+    ticket_path = TICKETS_DIR / f"{ticket_id}.json"
+    if not ticket_path.exists():
+        raise FileNotFoundError(f"Local ticket file not found: {ticket_path}")
+    data = json.loads(ticket_path.read_text())
+    comments = [
+        c if isinstance(c, str) else c.get("body", "")
+        for c in data.get("comments", [])
+    ]
+    return {
+        "ticket_id": ticket_id,
+        "title": data.get("title", ""),
+        "description": data.get("description", ""),
+        "comments": comments,
+    }
 
 
 def get_ticket(ticket_id: str) -> dict:
@@ -25,10 +43,13 @@ def get_ticket(ticket_id: str) -> dict:
         dict with keys: ticket_id, title, description, comments.
     """
     ticket_id = str(ticket_id).lstrip("#")
-    headers = {"Accept": "application/vnd.github+json"}
     token = os.environ.get("GITHUB_TOKEN")
-    if token:
-        headers["Authorization"] = f"Bearer {token}"
+
+    if not token:
+        print("[get_ticket] No GITHUB_TOKEN found — reading from local JSON.", file=sys.stderr)
+        return _get_local(ticket_id)
+
+    headers = {"Accept": "application/vnd.github+json", "Authorization": f"Bearer {token}"}
 
     issue_url = f"{API_BASE}/repos/{OWNER}/{REPO}/issues/{ticket_id}"
     issue_resp = requests.get(issue_url, headers=headers)
