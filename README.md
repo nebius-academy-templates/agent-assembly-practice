@@ -18,7 +18,7 @@ Once you log in to your GitHub account, the repository for this task will be add
 
 1. Confirm that `agent-assembly-practice` appears in your GitHub account.
 2. Clone this repo and open it in your editor.
-3. Check that you have Python 3.9+ installed: `python --version`.
+3. Check that you have Python 3.11+ installed: `python --version`.
 4. Verify that the tools work:
 
 ```
